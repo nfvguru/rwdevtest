@@ -1,3 +1,9 @@
 rwfw/bin
 rwfw/lib
 rwfw/pyvenv.cfg
+rwfw/db.sqlite3
+rwfw/images/
+rwfw/manage.py
+rwfw/rwfw_admin/__pycache__/
+rwfw/rwfw_main/__pycache__/
+rwfw/rwfw_main/migrations/__pycache__/
