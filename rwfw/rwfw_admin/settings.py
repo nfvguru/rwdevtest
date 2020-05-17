@@ -25,12 +25,13 @@ SECRET_KEY = 'iy%(@dl)j=0c&(te5fl2@iuw(i*0bx4&+ipblc_iez1#sq1f#d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.75.23.131']# WARNING: 
+ALLOWED_HOSTS = ['10.75.23.131']# WARNING:
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rwfw_main.apps.RwfwMainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,8 +76,14 @@ WSGI_APPLICATION = 'rwfw_admin.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #    'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'rwfw',
+        'USER': 'devtest',
+        'PASSWORD':'devtest1!',
+        'HOST':'localhost',
+        'PORT':'5432'
     }
 }
 
@@ -105,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
