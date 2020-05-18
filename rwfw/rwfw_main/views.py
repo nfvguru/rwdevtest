@@ -5,5 +5,9 @@ from .models import rwfw_item_table
 # Create your views here.
 def index(request):
     #return HttpResponse("RWFW Initial.")
-    db1_obj = rwfw_item_table.objects.all()
-    return render(request,'index.html', {'items':db1_obj})
+    db1_obj = rwfw_item_table.objects
+    return render(request,'index.html',{'items':db1_obj )
+
+def activities(request, item_id):
+    print(item_id)
+    return render(request, 'index.html')
