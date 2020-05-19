@@ -6,6 +6,9 @@ from .models import rwfw_item_table
 def index(request):
     #return HttpResponse("RWFW Initial.")
     db1_obj = rwfw_item_table.objects.all()
+    for titem in db1_obj:
+       print(titem.item_icon.url)
+
     return render(request,'index.html',{'items':db1_obj})
 
 def activities(request, item_id):
