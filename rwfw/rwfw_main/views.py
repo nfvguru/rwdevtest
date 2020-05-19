@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from .models import rwfw_item_table
 
@@ -9,5 +9,6 @@ def index(request):
     return render(request,'index.html',{'items':db1_obj})
 
 def activities(request, item_id):
-    print(item_id)
-    return render(request, 'index.html')
+    #print(item_id)
+    act_item = get_object_or_404(rwfw_item_table,pk=item_id)
+    return render(request, 'myitems.html', {'selops':act_item})
