@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+{% load static %}	
   <head>
     <meta charset="utf-8">
     <title></title>
   </head>
   <body>
-    {% for selop in selops %}
-    <p>{{selop.item_head}}</p>
-    <p>{{selop.item_desc}}</p>
-    {% endfor %}
+    <h1>  WE NEED TO DEFINE THE BELOW ACTIVITY</h1>	  
+    <img src="{{selops.item_icon.url}}" height=250> 
+    <p>{{selops.item_head}}</p>
+    <p>{{selops.item_desc}}</p>
   </body>
 </html>
