@@ -61,7 +61,9 @@
             <img class="card-img-top" src="{{item.item_icon.url}}" height=100>
             </a>
             <div class="card-body">
-		    <p class="card-text"> <strong>{{item.item_head}}</strong></p>
+              <a href="{% url 'rwfwops' item.id %}">
+		            <p class="card-text"> <strong>{{item.item_head}}</strong></p>
+              </a>
               <p class="card-text">{{item.item_desc}}</p>
             </div>
           </div>
