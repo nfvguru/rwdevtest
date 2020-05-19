@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-{% load static %}	
+{% load static %}
   <head>
     <meta charset="utf-8">
     <title></title>
   </head>
   <body>
-    <h1>  WE NEED TO DEFINE THE BELOW ACTIVITY</h1>	  
-    <img src="{{selops.item_icon.url}}" height=250> 
+    <h1>  WE NEED TO DEFINE THE BELOW ACTIVITY</h1>
+    <img src="{{selops.item_icon.url}}" height=250>
     <p>{{selops.item_head}}</p>
     <p>{{selops.item_desc}}</p>
+    <a href="{% url 'index' %}">BACK</a>
   </body>
 </html>
