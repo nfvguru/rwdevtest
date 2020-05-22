@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('rwfw_main.urls')),
-    path('admin/', admin.site.urls),
+    path('supermanager/', admin.site.urls),
 ]
 
 urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
