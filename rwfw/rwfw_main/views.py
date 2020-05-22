@@ -6,7 +6,9 @@ from .models import rwfw_item_table
 def index(request):
     #return HttpResponse("RWFW Initial.")
     db1_obj = rwfw_item_table.objects.all()
-    return render(request,'index.html',{'items':db1_obj})
+    visit_count = request.session.get('num_visit',0) + 1
+    request.session['num_visit'] = visit_count
+    return render(request,'index.html',{'items':db1_obj,'visit_count':visit_count})
 
 def activities(request, item_id):
     #print(item_id)
