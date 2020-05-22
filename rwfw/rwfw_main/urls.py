@@ -3,8 +3,9 @@ from .import views
 
 
 
+
 urlpatterns = [
     path('', views.index,name="index"),
-    path('<int:item_id>', views.activities,name="rwfwops"),
-    path('<mtype>', views.handlemanagers,name="mtype"),
+    # path('<int:item_id>', views.activities,name="rwfwops"),
+    # path('<mtype>', views.handlemanagers,name="mtype"),
 ]
