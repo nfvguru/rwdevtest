@@ -14,3 +14,8 @@ def activities(request, item_id):
     #print(item_id)
     act_item = get_object_or_404(rwfw_item_table,pk=item_id)
     return render(request, 'myitems.html', {'selops':act_item})
+
+
+def handlemanagers(request, mtype):
+    print(mtype)
+    return HttpResponse("OK will do it")

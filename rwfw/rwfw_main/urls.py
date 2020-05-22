@@ -5,5 +5,6 @@ from .import views
 
 urlpatterns = [
     path('', views.index,name="index"),
-    path('<int:item_id>', views.activities,name="rwfwops"),    
+    path('<int:item_id>', views.activities,name="rwfwops"),
+    path('<Mtype>Manager', views.handlemanagers,name="mtype"),
 ]
