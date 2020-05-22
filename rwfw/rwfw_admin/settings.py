@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '10.75.23.131', '10.82.43.161']# WARNING:
 # Application definition
 
 INSTALLED_APPS = [
+    'rwfw_hosts.apps.RwfwHostsConfig',
     'rwfw_main.apps.RwfwMainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
