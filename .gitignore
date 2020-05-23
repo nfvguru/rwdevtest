@@ -9,3 +9,5 @@ rwfw/rwfw_main/__pycache__/
 rwfw/rwfw_main/static/
 rwfw/rwfw_main/migrations/__pycache__/
 rwfw/Scripts
+rwfw/bootstrap-4.5.0-dist
+rwfw/static
