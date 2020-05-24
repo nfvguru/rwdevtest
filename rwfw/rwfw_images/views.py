@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import rwfw_image_downloaded
+from .models import rwfw_image_type
+from .models import rwfw_image_repo
 
 # Create your views here.
 def imagemanager(request):
-    # print(mhost)
-    # db1_obj = rwfw_host_type.objects.all()
-    # return render(request,'hosts.html',{'items':db1_obj})
-    return HttpResponse("Image Manager Da")
+    db1_obj = rwfw_image_type.objects.all()
+    return render(request,'images.html',{'items':db1_obj})
 
 
 def imagelist(request,typename):
