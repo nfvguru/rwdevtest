@@ -55,6 +55,7 @@
     <div class="container">
 
       <div class="row">
+
 {% for item in hosttable %}
         <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
@@ -64,10 +65,45 @@
             <div class="card-body">
               <!-- <a href="{{BASE_UR}}/ListHost/{{item.type_name}}"> -->
 		            <p class="card-text">
-                  <strong>{{item.host_name}}</strong>
-                  {{item.host_ip}}
-                  {{item.host_user}}
-                  {{item.host_pass}}
+                  <strong>{{item.host_name}} :  {{item.host_ip}}</strong>
+                  :&emsp;&emsp;
+                  <img src="
+                  {% if  reachable %}
+                  {% static 'ON.PNG' %}
+                  {% else %}
+                  {% static 'OFF.PNG' %}
+                  {% endif %}
+                  " height=30 width=30>
+                  <!-- <img src="{% static 'OFF.PNG' %}" height=30 width=30> -->
+                  <!-- {{item.host_user}} -->
+                  <!-- {{item.host_pass}} -->
+                </p>
+              <!-- </a> -->
+              <!-- <p class="card-text">{{item.item_desc}}</p> -->
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <!-- <a href="{{BASE_UR}}/ListHost/{{item.type_name}}">
+            <img class="card-img-top" src="{{item.type_img.url}}" height=200>
+            </a> -->
+            <div class="card-body">
+              <!-- <a href="{{BASE_UR}}/ListHost/{{item.type_name}}"> -->
+		            <p class="card-text">
+                  <strong> {{ host_ip }}</strong>
+                  &nbsp;:&emsp;
+                  <img src="
+                  {% if  reachable %}
+                  {% static 'ON.PNG' %}
+                  {% else %}
+                  {% static 'OFF.PNG' %}
+                  {% endif %}
+                  " height=30 width=30>
+                  <!-- <img src="{% static 'OFF.PNG' %}" height=30 width=30> -->
+                  <!-- {{item.host_user}} -->
+                  <!-- {{item.host_pass}} -->
                 </p>
               <!-- </a> -->
               <!-- <p class="card-text">{{item.item_desc}}</p> -->
