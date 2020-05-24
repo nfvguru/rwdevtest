@@ -92,6 +92,7 @@
             <div class="card-body">
               <!-- <a href="{{BASE_UR}}/ListHost/{{item.type_name}}"> -->
 		            <p class="card-text">
+                  {% if host_ip  %}
                   <strong> {{ host_ip }}</strong>
                   &nbsp;:&emsp;
                   <img src="
@@ -101,6 +102,7 @@
                   {% static 'OFF.PNG' %}
                   {% endif %}
                   " height=30 width=30>
+                  {% endif %}
                   <!-- <img src="{% static 'OFF.PNG' %}" height=30 width=30> -->
                   <!-- {{item.host_user}} -->
                   <!-- {{item.host_pass}} -->
