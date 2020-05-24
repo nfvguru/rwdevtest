@@ -41,7 +41,12 @@
   <section class="jumbotron text-center">
     <div class="container">
       <h1>RWFW VA TESTER MASTER</h1>
-      <h3>IMAGE MANAGER</h3>
+      <h3>{{ tpname }}</h3>
+      <img src="{{ tpurl.url }}" height=200>
+      <!-- </p>
+      <p>
+      <a href="{{BASE_URL}}" class="btn btn-primary my-2">Back</a>
+      </p> -->
     </div>
     <!-- <h4> Visit Count = {{ visit_count }}</h4> -->
   </section>
@@ -50,20 +55,34 @@
     <div class="container">
 
       <div class="row">
-{% for item in items %}
+
+{% for item in downtable %}
         <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <a href="{{BASE_UR}}/ListImage/{{item.type_name}}">
-            <img class="card-img-top" src="{{item.type_img.url}}" height=150>
-            </a>
+            <!-- <a href="{{BASE_UR}}/ListHost/{{item.type_name}}">
+            <img class="card-img-top" src="{{item.type_img.url}}" height=200>
+            </a> -->
             <div class="card-body">
-              <a href="{{BASE_UR}}/ListImage/{{item.type_name}}">
-		            <p class="card-text"> <strong>{{item.type_name}}</strong></p>
-              </a>
+              <!-- <a href="{{BASE_UR}}/ListHost/{{item.type_name}}"> -->
+		            <p class="card-text">
+                  <strong>{{item.dwn_version}} :  {{item.dwn_build}}</strong>
+                  <!-- :&emsp;&emsp;
+                  <img src="
+                  {% if  reachable %}
+                  {% static 'ON.PNG' %}
+                  {% else %}
+                  {% static 'OFF.PNG' %}
+                  {% endif %}
+                  " height=30 width=30> -->
+                  <!-- <img src="{% static 'OFF.PNG' %}" height=30 width=30> -->
+                  <!-- {{item.host_user}} -->
+                  <!-- {{item.host_pass}} -->
+                </p>
+              <!-- </a> -->
               <!-- <p class="card-text">{{item.item_desc}}</p> -->
             </div>
           </div>
-        </div>
+        </div>        
 {% endfor %}
       </div>
     </div>

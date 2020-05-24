@@ -10,6 +10,7 @@ class rwfw_image_repo(models.Model):
     repo_base = models.CharField(max_length=50, default='/projects')
     repo_verson = models.CharField(max_length=20, default='1.1')
     repo_build = models.CharField(max_length=20, default='0')
+    repo_type = models.IntegerField(default=1)
 
     def __str__(self):
         return self.repo_name
@@ -20,6 +21,7 @@ class rwfw_image_downloaded(models.Model):
     dwn_index = models.IntegerField(default=0)
     dwn_path = models.CharField(max_length=50, default='Builds/')
     dwm_avail = models.IntegerField(default=1)
+    dwn_type = models.IntegerField(default=1)
 
     def __str__(self):
         return self.dwn_version + '_' + self.dwn_build

@@ -11,5 +11,20 @@ def imagemanager(request):
 
 
 def imagelist(request,typename):
-    return HttpResponse("List Images")
-# Create your views here.
+    print(typename)
+    context = {'tpname':typename}
+    db1_obj = rwfw_image_type.objects.filter(type_name=typename)
+    # db2_obj = rwfw_image_repo.objects.none();
+    db3_obj = rwfw_image_downloaded.objects.none();
+    try:
+        # print(db1_obj[0].id)
+        # print(db1_obj[0].type_name)
+        # db2_obj = rwfw_image_repo.objects.filter(repo_type=db1_obj[0].id)
+        context['tpurl']=db1_obj[0].type_img
+        db3_obj = rwfw_image_downloaded.objects.filter(dwn_type=db1_obj[0].id)
+    except:
+        # print("Query Error")
+        context['tpurl'] = ''
+    # context['imagetable'] = db2_obj
+    context['downtable'] = db3_obj
+    return render(request,'listimage.html',context)
