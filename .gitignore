@@ -11,3 +11,6 @@ rwfw/rwfw_main/migrations/__pycache__/
 rwfw/Scripts
 rwfw/bootstrap-4.5.0-dist
 rwfw/static
+rwfw/media/
+rwfw/rwfw_admin/worker1.pid
+rwfw/rwfw_admin/worker2.pid
