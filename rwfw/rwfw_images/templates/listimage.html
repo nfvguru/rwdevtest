@@ -43,6 +43,7 @@
       <h1>RWFW VA TESTER MASTER</h1>
       <h3>{{ tpname }}</h3>
       <img src="{{ tpurl.url }}" height=200>
+      <h3>{{ request.get_host }}</h3>
       <!-- </p>
       <p>
       <a href="{{BASE_URL}}" class="btn btn-primary my-2">Back</a>
@@ -82,7 +83,7 @@
               <!-- <p class="card-text">{{item.item_desc}}</p> -->
             </div>
           </div>
-        </div>        
+        </div>
 {% endfor %}
       </div>
     </div>
