@@ -45,7 +45,7 @@ def hostlist(request,typename):
     elif db2_obj.exists():
         host_ip = db2_obj[0].host_ip
         # print(db2_obj[0].host_name)
-        print(os.name)
+        #print(os.name)
         ping_opt = '-c 1 '
         if os.name == 'nt':
             ping_opt = '-n 1 '

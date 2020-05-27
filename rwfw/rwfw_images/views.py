@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import rwfw_image_downloaded
 from .models import rwfw_image_type
 from .models import rwfw_image_repo
+from .tasks import adding_task
 
 # Create your views here.
 def imagemanager(request):
