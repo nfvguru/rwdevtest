@@ -44,8 +44,9 @@
       <h3>{{ tpname }}</h3>
       <img src="{{ tpurl.url }}" height=200>
       <p>
-      <a href="http://{{ request.get_host }}/ImageManager" class="btn btn-primary my-2">Back</a>      
+      <a href="http://{{ request.get_host }}/ImageManager" class="btn btn-primary my-2">Back</a>
       </p>
+      <p>{{ task_id }}{{ task_status }}{{ task_results }}</p>
     </div>
     <!-- <h4> Visit Count = {{ visit_count }}</h4> -->
   </section>

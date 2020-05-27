@@ -28,4 +28,11 @@ def imagelist(request,typename):
         context['tpurl'] = ''
     # context['imagetable'] = db2_obj
     context['downtable'] = db3_obj
+
+    task = adding_task.delay(9,4)
+    context['task_id'] = task.id
+    context['task_status'] = task.status
+    if task.status == 'SUCCESS':
+        context['task_results'] = task.get()
+
     return render(request,'listimage.html',context)
