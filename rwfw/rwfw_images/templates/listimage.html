@@ -46,11 +46,26 @@
       <p>
       <a href="http://{{ request.get_host }}/ImageManager" class="btn btn-primary my-2">Back</a>
       </p>
-      <p>{{ task_id }}{{ task_status }}{{ task_results }}</p>
+      <!-- <p>{{ task_id }}{{ task_status }}{{ task_results }}</p> -->
     </div>
     <!-- <h4> Visit Count = {{ visit_count }}</h4> -->
   </section>
-
+{% if vertable %}
+<div>
+<table border="1px solid black" margin-left="auto" margin-right="auto">
+  <tr>
+    <th colspan="2">Available Versions</th>
+  </tr>
+{% for item in vertable %}
+<tr>
+  <td>{{item.repo_verson}}</td>
+  <!-- <td><a href="http://{{ request.get_host }}/Download/{{item.repo_verson}}/0" class="btn btn-primary my-2"> Check and get Latest </a></td> -->
+  <td><a href="{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}" class="btn btn-primary my-2"> Check and get Latest </a></td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endif %}
   <div class="album py-5 bg-light">
     <div class="container">
 

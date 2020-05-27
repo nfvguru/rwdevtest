@@ -7,5 +7,6 @@ urlpatterns = [
     # re_path(r'/Host Manager', views.hostmanager,name="hostmanager"),
     # path('<int:item_id>', views.activities,name="rwfwops"),
     path('ListImage/<typename>', views.imagelist, name="imagelist"),
+    path('Download/<int:task_id>/<str:task_version>/<str:task_build>', views.DownloadTaskView.as_view(), name="download"),
     re_path(r'^Image', views.imagemanager, name="imagemanager"),
 ]
