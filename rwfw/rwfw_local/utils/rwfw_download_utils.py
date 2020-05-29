@@ -8,3 +8,4 @@ def rwfw_ckver(rip, ru, rp, rl):
         i -= 1
         time.sleep(5)
         print("Njan Pinnem Okay")
+    return 135

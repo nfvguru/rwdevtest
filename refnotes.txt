@@ -60,5 +60,5 @@ celery -A worker -l info -P eventlet
 
 This works on
 window 10 + celery 4.1 + python 3
-
+D:\Hobby_Projects\Downloads\redis\redis-sever
 celery -A your_app_name worker --pool=solo -l info

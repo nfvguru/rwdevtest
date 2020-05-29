@@ -11,5 +11,5 @@ def rwfw_download_image(rip, ru, rp, rl):
     print(ru)
     print(rp)
     print(rl)
-    rwfw_ckver(rip, ru, rp, rl)
-    return 1
+    bnum = rwfw_ckver(rip, ru, rp, rl)
+    return bnum

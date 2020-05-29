@@ -52,7 +52,7 @@
   </section>
 {% if vertable %}
 <div>
-<table style="border:1px solid black;margin-left:auto;margin-right:auto;" width=500>
+<table style="border:1px solid black;margin-left:auto;margin-right:auto;" width=700>
   <tr style="border:1px solid black;" >
     <th colspan="2" align='center'>Available Versions</th>
   </tr>
@@ -61,7 +61,9 @@
   <td width='200'><strong>{{item.repo_verson}}</strong></td>
   <!-- <td><a href="http://{{ request.get_host }}/Download/{{item.repo_verson}}/0" class="btn btn-primary my-2"> Check and get Latest </a></td> -->
   <!-- <td><a href="{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}" class="btn btn-primary my-2"> Check and get Latest </a></td> -->
-  <td><input id="clickMe" type="button" value=" Check and get Latest" onclick="doDownload('{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}');" /></td>
+  <td><input id="clickMe" type="button" value=" Check and get Latest" onclick="doDownload('{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}');" />
+  <p id='progress-bar'></p>
+  </td>
 </tr>
 {% endfor %}
 </table>
@@ -109,26 +111,43 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <script>
+//var dots = 1;
+var progressTitle = document.getElementById('progress-bar');
+
+function updateProgressTitle()  {
+  /* dots++;
+   if (dots > 3) {
+      dots = 1;
+    }
+    //alert("I am an alert box!");
+    //progressTitle.innerHTML = 'processing images ';
+    for (var i = 0; i < dots; i++) {*/
+      progressTitle.innerHTML += '.';
+    //}
+}
+
 function updateProgress (progressUrl) {
     fetch(progressUrl).then(function(response) {
         response.json().then(function(data) {
-            // update the appropriate UI components
-            setProgress(data.state, data.details);
-            setTimeout(updateProgress, 500, progressUrl);
+            //alert("I am an alert box!");
+            updateProgressTitle();
+            if (data.task_status == "SUCCESS") {
+              progressTitle.innerHTML += ' build ' + data.task_build + ' is available';
+            } else {
+              setTimeout(updateProgress, 2500, progressUrl);
+            }
+
         });
     });
 }
-// var progressUrl = ' url "task_status" task_id ';  // django template usage
-updateProgress(progressUrl);
+// First call from here
 function doDownload(startUrl){
-  //var startUrl = '{ url 'download' task_id=repoid task_version=item.repo_verson task_build=0 }'
   var updateUrl = '{{BASE_UR}}/StatusDownload/'
+  progressTitle.innerHTML += 'Checking ..';
   fetch(startUrl).then(function(response) {
       response.json().then(function(data) {
-          // update the appropriate UI components
-          //setProgress(data.state, data.details);
-          //setTimeout(updateProgress, 500, progressUrl);
           updateUrl += data.t_id;
+          updateProgress(updateUrl);
       });
   });
 }
