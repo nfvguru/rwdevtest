@@ -6,6 +6,8 @@ from .models import rwfw_image_repo
 from .tasks import adding_task
 from .tasks import rwfw_download_image
 from django.views import View
+from django.http import JsonResponse
+from celery import current_app
 
 # Create your views here.
 def imagemanager(request):
@@ -75,5 +77,19 @@ class DownloadTaskView(View):
             dpath += my_type
             print(dpath)
             task = rwfw_download_image.delay(dip, duser, dpass, dpath)
+            response_data = {
+                't_id': task.id,
+                't_status': task.status,
+            }
+            # return HttpResponse(json.dumps(response_data), content_type='application/json')
+            return JsonResponse(response_data)
         return HttpResponse('Vandithangayya')
         # return JsonResponse(response_data)
+
+class DownloadTaskMonitor(View):
+    def get(self, request, task_id):
+        task = current_app.AsyncResult(task_id)
+        response_data = {'task_status': task.status, 'task_id': task.id}
+        if task.status == 'SUCCESS':
+            response_data['results'] = task.get()
+        return JsonResponse(response_data)
