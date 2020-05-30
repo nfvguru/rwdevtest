@@ -14,3 +14,5 @@ rwfw/static
 rwfw/media/
 rwfw/rwfw_admin/worker1.pid
 rwfw/rwfw_admin/worker2.pid
+rwfw/rwfw_local/json
+rwfw/json
