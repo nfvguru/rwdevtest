@@ -24,4 +24,4 @@ def rwfw_exists_chk(rip, ru, rp, rl):
     my_cmd = 'ls ' + rl
     s.sendline(my_cmd)
     s.prompt()
-    return s.before
+    return s.before.decode('utf-8').split('\r\n')[1]
