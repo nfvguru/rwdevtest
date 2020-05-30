@@ -4,6 +4,7 @@ from django.conf import settings
 from rwfw_utils.models import rwfw_utils_imgdownload
 # from rwfw_utils.models import jsons_path
 from .rwfw_json_utils import rwfw_create_config
+from .rwfw_remote_ops import rwfw_remote_build
 
 
 
@@ -46,8 +47,18 @@ def rwfw_ckver(rip, ru, rp, rl):
         print("Njan Pinnem Okay")
     db1_obj = rwfw_utils_imgdownload.objects.filter(imgdwn_path=rl)
     if db1_obj.exists():
-        print(db1_obj[0].imgdwn_name)
+        # print(db1_obj[0].imgdwn_name)
+        db1_obj = db1_obj.first()
+        print(db1_obj.imgdwn_name)
     else:
         print('NOT exists')
         db1_obj = create_cfg_file(rip,ru,rp,rl)
-    return 135
+    my_config = ""
+    try:
+        my_config = db1_obj.json_config
+    except:
+        print('error')
+    mybuild = rwfw_remote_build(my_config)
+    print(mybuild)
+    # return 135
+    return mybuild

@@ -1,4 +1,6 @@
-from pexpect import pxssh
+import os
+if os.name != 'nt':
+    from pexpect import pxssh
 
 
 
@@ -14,4 +16,12 @@ def test_ssh():
     print(s.before)
     s.logout()
 
-test_ssh()
+def rwfw_exists_chk(rip, ru, rp, rl):
+    if os.name == 'nt':
+        return 'AlteonOS-32.6.2.0_dbg_21.ova'
+    s = pxssh.pxssh()
+    s.login(rip, ru, rp)
+    my_cmd = 'ls ' + rl
+    s.sendline(my_cmd)
+    s.prompt()
+    return s.before
