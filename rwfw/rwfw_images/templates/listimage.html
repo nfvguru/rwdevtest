@@ -52,17 +52,30 @@
   </section>
 {% if vertable %}
 <div>
-<table style="border:1px solid black;margin-left:auto;margin-right:auto;" width=700>
+<table style="border:1px solid black;margin-left:auto;margin-right:auto;" width=1000>
   <tr style="border:1px solid black;" >
-    <th colspan="2" align='center'>Available Versions</th>
+    <th colspan="4" align='center'>Available Versions</th>
   </tr>
 {% for item in vertable %}
 <tr style="border:1px solid black;background-color:lightblue; color:white;" >
-  <td width='200'><strong>{{item.repo_verson}}</strong></td>
+  <td width='100'><strong>{{item.repo_verson}}</strong></td>
+  <td width='300'>
+    Build :
+    <input type="text" id='{{item.repo_verson}}_text' list="builds"/>
+    <datalist id="builds">
+    </datalist>
+  </td>
   <!-- <td><a href="http://{{ request.get_host }}/Download/{{item.repo_verson}}/0" class="btn btn-primary my-2"> Check and get Latest </a></td> -->
   <!-- <td><a href="{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}" class="btn btn-primary my-2"> Check and get Latest </a></td> -->
-  <td><input id="clickMe" type="button" value=" Check and get Latest" onclick="doDownload('{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}');" />
+  <td width='500'>
+    <input type="button" id='check_build' value=" Check Latest"
+     onclick="chkDownload('{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}', '{{item.repo_verson}}_text');" />
   <p id='progress-bar'></p>
+  </td>
+  <td>
+      <input id="dwnLoad" type="button" value=" Download" disabled=True
+        onclick=""
+       />
   </td>
 </tr>
 {% endfor %}
@@ -113,6 +126,8 @@
 <script>
 //var dots = 1;
 var progressTitle = document.getElementById('progress-bar');
+var checkItem = document.getElementById('check_build');
+var build = "";
 
 function updateProgressTitle()  {
   /* dots++;
@@ -132,6 +147,8 @@ function updateProgress (progressUrl) {
             //alert("I am an alert box!");
             updateProgressTitle();
             if (data.task_status == "SUCCESS") {
+              // var textItem = document.getElementById(txtname);
+              // textItem.option = data.task_build;
               progressTitle.innerHTML += ' build ' + data.task_build + ' is available';
             } else {
               setTimeout(updateProgress, 2500, progressUrl);
@@ -141,13 +158,16 @@ function updateProgress (progressUrl) {
     });
 }
 // First call from here
-function doDownload(startUrl){
+function chkDownload(startUrl, txtname){
   var updateUrl = '{{BASE_UR}}/StatusDownload/'
+  var textItem = document.getElementById(txtname);
+  textItem.disabled = true;
+  checkItem.disabled = true;
   progressTitle.innerHTML += 'Checking ..';
   fetch(startUrl).then(function(response) {
       response.json().then(function(data) {
           updateUrl += data.t_id;
-          updateProgress(updateUrl);
+          updateProgress(updateUrl, txtname);
       });
   });
 }
