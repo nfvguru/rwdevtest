@@ -39,12 +39,6 @@ def create_cfg_file(rip,ru,rp,rl):
 
 
 def rwfw_ckver(rip, ru, rp, rl):
-#    print("Njan Okay")
-#    i = 5
-#    while i > 1 :
-#        i -= 1
-#        time.sleep(2)
-#        print("Njan Pinnem Okay")
     db1_obj = rwfw_utils_imgdownload.objects.filter(imgdwn_path=rl)
     if db1_obj.exists():
         # print(db1_obj[0].imgdwn_name)
@@ -59,6 +53,6 @@ def rwfw_ckver(rip, ru, rp, rl):
     except:
         print('error')
     mybuild = rwfw_remote_build(my_config)
-    print(mybuild)
+    # print(mybuild)
     # return 135
     return mybuild
