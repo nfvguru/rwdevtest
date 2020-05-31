@@ -4,10 +4,12 @@ from .models import rwfw_image_downloaded
 from .models import rwfw_image_type
 from .models import rwfw_image_repo
 from .tasks import adding_task
-from .tasks import rwfw_download_image
+from .tasks import rwfw_chkdownload_image
+from .tasks import rwfw_dodownload_image
 from django.views import View
 from django.http import JsonResponse
 from celery import current_app
+from rwfw_local.utils.rwfw_download_utils import build_path_from_db
 
 # Create your views here.
 def imagemanager(request):
@@ -49,34 +51,14 @@ def imagelist(request,typename):
 
 class DownloadTaskView(View):
     def get(self, request, task_id, task_version, task_build):
-        print(task_id)
-        print(task_version)
-        print(task_build)
         db1_obj = rwfw_image_repo.objects.filter(repo_type=task_id, repo_verson=task_version, repo_build=task_build).first()
         if db1_obj:
-            print("Download image from")
-            print(db1_obj.repo_ip)
-            print("at path")
             dip   = db1_obj.repo_ip
             duser = db1_obj.repo_user
             dpass = db1_obj.repo_pass
-            dpath = db1_obj.repo_base
-            dpath += db1_obj.repo_verson + "/"
-            my_build = db1_obj.repo_build
-            if my_build == '0':
-                my_build="lastSuccessfulBuild"
-            dpath += my_build +"/HW_CH_ODS-VA/DEBUG/"
-            if task_id == 1:
-                my_type = 'VMW'
-            elif task_id == 2:
-                my_type = 'ISO'
-            elif task_id == 3:
-                my_type = 'img'
-            elif task_id == 4:
-                my_type = 'KVM'
-            dpath += my_type
-            print(dpath)
-            task = rwfw_download_image.delay(dip, duser, dpass, dpath)
+            dpath = build_path_from_db(db1_obj, task_id)
+            # print(dpath)
+            task = rwfw_chkdownload_image.delay(dip, duser, dpass, dpath)
             response_data = {
                 't_id': task.id,
                 't_status': task.status,
@@ -85,6 +67,20 @@ class DownloadTaskView(View):
             return JsonResponse(response_data)
         return HttpResponse('Vandithangayya')
         # return JsonResponse(response_data)
+
+class DoDownloadTaskView(View):
+    def get(self, request, task_id, task_version, task_build):
+        db1_obj = rwfw_image_repo.objects.filter(repo_type=task_id, repo_verson=task_version, repo_build=task_build).first()
+        if db1_obj:
+            dpath = build_path_from_db(db1_obj, task_id)
+            print (dpath)
+            task = rwfw_dodownload_image.delay(dpath)
+            response_data = {
+                't_id': task.id,
+                't_status': task.status,
+            }
+            return JsonResponse(response_data)
+        return HttpResponse('Download Not Possible')
 
 class DownloadTaskMonitor(View):
     def get(self, request, task_id):

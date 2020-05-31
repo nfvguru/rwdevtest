@@ -37,6 +37,25 @@ def create_cfg_file(rip,ru,rp,rl):
     new_db1.id
     return new_db1
 
+def build_path_from_db(dbobject, task_id):
+        dpath = dbobject.repo_base
+        dpath += dbobject.repo_verson + "/"
+        my_build = dbobject.repo_build
+        if my_build == '0':
+            my_build="lastSuccessfulBuild"
+        dpath += my_build +"/HW_CH_ODS-VA/DEBUG/"
+        if task_id == 1:
+            my_type = 'VMW'
+        elif task_id == 2:
+            my_type = 'ISO'
+        elif task_id == 3: 
+            my_type = 'img'
+        elif task_id == 4:
+            my_type = 'KVM'
+        dpath += my_type
+        return dpath
+
+
 
 def rwfw_ckver(rip, ru, rp, rl):
     db1_obj = rwfw_utils_imgdownload.objects.filter(imgdwn_path=rl)

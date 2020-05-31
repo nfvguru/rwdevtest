@@ -58,27 +58,35 @@
   </tr>
 {% for item in vertable %}
 <tr style="border:1px solid black;background-color:lightblue; color:white;" >
-  <td width='100'><strong>{{item.repo_verson}}</strong></td>
-  <td width='300'>
-    Build :
-    <input type="text" id='{{item.repo_verson}}_text' list="builds"/>
-    <datalist id="builds">
-    </datalist>
-  </td>
+  <td width='600'><strong>{{item.repo_verson}}</strong></td>
+
   <!-- <td><a href="http://{{ request.get_host }}/Download/{{item.repo_verson}}/0" class="btn btn-primary my-2"> Check and get Latest </a></td> -->
   <!-- <td><a href="{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}" class="btn btn-primary my-2"> Check and get Latest </a></td> -->
-  <td width='500'>
+  <td width='200'>
     <input type="button" id='check_build' value=" Check Latest"
-     onclick="chkDownload('{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}', '{{item.repo_verson}}_text');" />
-  <p id='progress-bar'></p>
+     onclick="chkDownload('{% url 'download' task_id=repoid task_version=item.repo_verson task_build=0 %}', '{{item.repo_verson}}_text')" />
+  <!-- <p id='progress-bar'></p> -->
   </td>
-  <td>
+  <td width='300'>
+    Build :
+    <input type="text" id='{{item.repo_verson}}_text' onchange="enablDButton('{{item.repo_verson}}_text')"/>
+    <!-- <datalist id="builds">
+    </datalist> -->
+  </td>
+  <td width='100'>
       <input id="dwnLoad" type="button" value=" Download" disabled=True
-        onclick=""
+        onclick="doDownload('{{repoid}}','{{item.repo_verson}}', '{{item.repo_verson}}_text')"
        />
   </td>
 </tr>
 {% endfor %}
+</table>
+<table style="margin-left:auto;margin-right:auto;" width=1000>
+  <tr style="" >
+    <th colspan="4" align='center'>
+      <p id='progress-bar'></p>
+    </th>
+  </tr>
 </table>
 </div>
 {% endif %}
@@ -124,53 +132,82 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <script>
-//var dots = 1;
 var progressTitle = document.getElementById('progress-bar');
 var checkItem = document.getElementById('check_build');
-var build = "";
+var dwnLoadItem = document.getElementById('dwnLoad');
+var updateUrl = '{{BASE_UR}}/StatusDownload/';
+
+var build = -1;
 
 function updateProgressTitle()  {
-  /* dots++;
-   if (dots > 3) {
-      dots = 1;
-    }
-    //alert("I am an alert box!");
-    //progressTitle.innerHTML = 'processing images ';
-    for (var i = 0; i < dots; i++) {*/
-      progressTitle.innerHTML += '.';
-    //}
+    progressTitle.innerHTML += '.';
 }
 
-function updateProgress (progressUrl) {
+function updateProgress (progressUrl, textItem, mode) {
     fetch(progressUrl).then(function(response) {
         response.json().then(function(data) {
             //alert("I am an alert box!");
             updateProgressTitle();
             if (data.task_status == "SUCCESS") {
               // var textItem = document.getElementById(txtname);
-              // textItem.option = data.task_build;
-              progressTitle.innerHTML += ' build ' + data.task_build + ' is available';
+              if(mode == 1) {
+                 build = data.task_build;
+                 progressTitle.innerHTML += ' build ' + data.task_build + ' is available';
+                 textItem.disabled = false;
+                 dwnLoadItem.disabled = false;
+                 // checkItem.disabled = false;
+                 textItem.value = build;
+              } else {
+                 window.location.reload();
+              }
             } else {
-              setTimeout(updateProgress, 2500, progressUrl);
+              setTimeout(updateProgress, 500, progressUrl, textItem, mode);
             }
 
         });
     });
 }
-// First call from here
+
 function chkDownload(startUrl, txtname){
-  var updateUrl = '{{BASE_UR}}/StatusDownload/'
   var textItem = document.getElementById(txtname);
   textItem.disabled = true;
   checkItem.disabled = true;
-  progressTitle.innerHTML += 'Checking ..';
+  progressTitle.innerHTML = 'Checking ..';
   fetch(startUrl).then(function(response) {
       response.json().then(function(data) {
-          updateUrl += data.t_id;
-          updateProgress(updateUrl, txtname);
+          progressUrl = updateUrl + data.t_id;
+          updateProgress(progressUrl, textItem, 1);
       });
   });
 }
+
+function doDownload(myid, myver, myfld) {
+  var fldElement = document.getElementById(myfld);
+  alert(build)
+  if ( build != -1 ) {
+    var bldval = 0;
+  } else {
+    var bldval = fldElement.value;
+  }
+  var downUrl ='{{BASE_UR}}/DoDownload';
+  downUrl += '/' + myid + '/' + myver + '/' + bldval;
+  alert(downUrl);
+  progressTitle.innerHTML = 'Downloading ..';
+  fetch(downUrl).then(function(response) {
+      response.json().then(function(data) {
+          alert(data.t_id);
+          progressUrl = updateUrl + data.t_id;
+          alert(progressUrl);
+          updateProgress(progressUrl, fldElement, 2);
+      });
+  });
+}
+
+function enablDButton(txtname){
+  //alert('vannu')
+  dwnLoadItem.disabled = false;
+}
 </script>
+
   </body>
 </html>
