@@ -6,7 +6,7 @@ rwfw/images/
 rwfw/manage.py
 rwfw/rwfw_admin/__pycache__
 rwfw/rwfw_main/__pycache__
-rwffw/rwfw_local/utils/__pycache__
+rwfw/rwfw_local/utils/__pycache__
 rwfw/rwfw_utils/__pycache__
 rwfw/rwfw_images/__pycache__
 rwfw/rwfw_main/static
