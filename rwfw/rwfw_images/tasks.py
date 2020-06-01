@@ -1,5 +1,6 @@
 from celery import shared_task
 from rwfw_local.utils.rwfw_download_utils import rwfw_ckver
+from rwfw_local.utils.rwfw_download_utils import rwfw_dwnver
 
 
 @shared_task
@@ -12,6 +13,7 @@ def rwfw_chkdownload_image(rip, ru, rp, rl):
     return bnum
 
 @shared_task
-def rwfw_dodownload_image(rl):
+def rwfw_dodownload_image(rip, ru, rp, rl):
     print(rl)
-    return 100
+    retstr = rwfw_dwnver(rip, ru, rp, rl)
+    return retstr

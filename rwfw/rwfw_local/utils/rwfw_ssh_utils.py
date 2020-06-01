@@ -1,6 +1,8 @@
 import os
 if os.name != 'nt':
+    import pexpect
     from pexpect import pxssh
+
 
 
 
@@ -25,3 +27,27 @@ def rwfw_exists_chk(rip, ru, rp, rl):
     s.sendline(my_cmd)
     s.prompt()
     return s.before.decode('utf-8').split('\r\n')[1]
+
+def rwfw_ftp_client(rip, ru, rp, rl, ri):
+    f_cmd='ftp ' + rip
+    child = pexpect.spawn (f_cmd)
+    child.expect ('Name .*: ')
+    child.sendline (ru)
+    child.expect ('Password:')
+    child.sendline (rp)
+    child.expect ('ftp> ')
+    child.sendline ('bin')
+    child.expect ('ftp> ')
+    cd_cmd = 'cd '+ rl
+    child.sendline (cd_cmd)
+    child.expect('ftp> ')
+    gt_cmd = 'get ' + ri
+    child.sendline (gt_cmd)
+    child.expect('ftp> ')
+    child.sendline ('bye')
+
+def rwfw_do_ftp(rip, ru, rp, rl, ri):
+    if os.name == 'nt':
+        return 'Success'
+    rwfw_ftp_client(rip, ru, rp, rl, ri)    
+    return "Success"

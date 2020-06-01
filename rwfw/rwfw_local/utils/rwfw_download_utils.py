@@ -4,7 +4,9 @@ from django.conf import settings
 from rwfw_utils.models import rwfw_utils_imgdownload
 # from rwfw_utils.models import jsons_path
 from .rwfw_json_utils import rwfw_create_config
+from .rwfw_json_utils import rwfw_get_img_from_config
 from .rwfw_remote_ops import rwfw_remote_build
+from .rwfw_remote_ops import rwfw_download_build
 
 
 
@@ -77,4 +79,22 @@ def rwfw_ckver(rip, ru, rp, rl):
     return mybuild
 
 
-# def rwfw_dwnver(rl):
+def rwfw_dwnver(rip, ru, rp, rl):
+    db1_obj = rwfw_utils_imgdownload.objects.filter(imgdwn_path=rl)
+    if db1_obj.exists():
+        db1_obj = db1_obj.first()
+    else:
+        print('Config NOT exists')
+        db1_obj = create_cfg_file(rip,ru,rp,rl)
+    my_config = ""
+    try:
+        my_config = db1_obj.json_config
+    except:
+        print('error')
+    img_name  = rwfw_get_img_from_config(my_config)
+    if (img_name == 'tofill' ):
+        mybuild = rwfw_remote_build(my_config)
+    img_name  = rwfw_get_img_from_config(my_config)
+    if (img_name == 'tofill' ):
+        return "error"
+    return rwfw_download_build(my_config)

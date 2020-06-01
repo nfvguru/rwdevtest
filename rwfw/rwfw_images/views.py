@@ -72,9 +72,12 @@ class DoDownloadTaskView(View):
     def get(self, request, task_id, task_version, task_build):
         db1_obj = rwfw_image_repo.objects.filter(repo_type=task_id, repo_verson=task_version, repo_build=task_build).first()
         if db1_obj:
+            dip   = db1_obj.repo_ip
+            duser = db1_obj.repo_user
+            dpass = db1_obj.repo_pass
             dpath = build_path_from_db(db1_obj, task_id)
             print (dpath)
-            task = rwfw_dodownload_image.delay(dpath)
+            task = rwfw_dodownload_image.delay(dip, duser, dpass, dpath)
             response_data = {
                 't_id': task.id,
                 't_status': task.status,

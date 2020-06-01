@@ -1,5 +1,6 @@
 import json
 from .rwfw_ssh_utils import rwfw_exists_chk
+from .rwfw_ssh_utils import rwfw_do_ftp
 
 
 def rwfw_remote_exists(config_fpath):
@@ -10,7 +11,7 @@ def rwfw_remote_exists(config_fpath):
         # print(c_db)
         resultStr=rwfw_exists_chk(c_db['ip'], c_db['user'], c_db['pass'], c_db['path'])
         print(resultStr)
-        if "AlteonOS" in resultStr:         
+        if "AlteonOS" in resultStr:
             c_db['img']=resultStr
             f_db['rwfw_img'] = c_db
             with open(config_fpath.name, 'w') as f:
@@ -33,3 +34,18 @@ def rwfw_remote_build(config_fpath):
     # print(build)
     return ret_string
     # return '-1'
+
+def rwfw_do_download_build(config_fpath):
+    with open(config_fpath.name) as f:
+        f_db = json.load(f)
+        c_db = f_db['rwfw_img']
+        resultStr=rwfw_do_ftp(c_db['ip'], c_db['user'], c_db['pass'], c_db['path'], c_db['img'])
+        print(resultStr)
+        if "Success" in resultStr:
+            return '1'
+    print ('returing 2')
+    return '-1'
+
+def rwfw_download_build(config_fpath):
+    ret_string = rwfw_do_download_build(config_fpath)
+    return ret_string
