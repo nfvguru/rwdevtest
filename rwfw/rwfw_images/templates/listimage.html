@@ -152,11 +152,15 @@ function updateProgress (progressUrl, textItem, mode) {
               // var textItem = document.getElementById(txtname);
               if(mode == 1) {
                  build = data.task_build;
-                 progressTitle.innerHTML += ' build ' + data.task_build + ' is available';
-                 textItem.disabled = false;
-                 dwnLoadItem.disabled = false;
-                 // checkItem.disabled = false;
-                 textItem.value = build;
+                 if(build == -1 ){
+                   progressTitle.innerHTML += " Error in fetching latest build details."
+                 } else {
+                    progressTitle.innerHTML += ' build ' + data.task_build + ' is available';
+                    dwnLoadItem.disabled = false;
+                    // checkItem.disabled = false;
+                     textItem.value = build;
+                  }   
+                  textItem.disabled = false;
               } else {
                  window.location.reload();
               }
@@ -191,13 +195,13 @@ function doDownload(myid, myver, myfld) {
   }
   var downUrl ='{{BASE_UR}}/DoDownload';
   downUrl += '/' + myid + '/' + myver + '/' + bldval;
-  alert(downUrl);
+  //alert(downUrl);
   progressTitle.innerHTML = 'Downloading ..';
   fetch(downUrl).then(function(response) {
       response.json().then(function(data) {
-          alert(data.t_id);
+          //alert(data.t_id);
           progressUrl = updateUrl + data.t_id;
-          alert(progressUrl);
+          //alert(progressUrl);
           updateProgress(progressUrl, fldElement, 2);
       });
   });

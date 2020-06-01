@@ -48,7 +48,7 @@ def build_path_from_db(dbobject, task_id):
             my_type = 'VMW'
         elif task_id == 2:
             my_type = 'ISO'
-        elif task_id == 3: 
+        elif task_id == 3:
             my_type = 'img'
         elif task_id == 4:
             my_type = 'KVM'
@@ -75,3 +75,6 @@ def rwfw_ckver(rip, ru, rp, rl):
     # print(mybuild)
     # return 135
     return mybuild
+
+
+# def rwfw_dwnver(rl):
