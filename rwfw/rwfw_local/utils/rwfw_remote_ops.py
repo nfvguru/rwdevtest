@@ -1,6 +1,7 @@
 import json
 from .rwfw_ssh_utils import rwfw_exists_chk
-from .rwfw_ssh_utils import rwfw_do_ftp
+# from .rwfw_ssh_utils import rwfw_do_ftp
+from .rwfw_fabric_utils import rwfw_fabric_download
 
 
 def rwfw_remote_exists(config_fpath):
@@ -39,7 +40,8 @@ def rwfw_do_download_build(config_fpath):
     with open(config_fpath.name) as f:
         f_db = json.load(f)
         c_db = f_db['rwfw_img']
-        resultStr=rwfw_do_ftp(c_db['ip'], c_db['user'], c_db['pass'], c_db['path'], c_db['img'])
+        # resultStr=rwfw_do_ftp(c_db['ip'], c_db['user'], c_db['pass'], c_db['path'], c_db['img'])
+        resultStr=rwfw_fabric_download(c_db['ip'], c_db['user'], c_db['pass'], c_db['path'], c_db['img'])
         print(resultStr)
         if "Success" in resultStr:
             return '1'

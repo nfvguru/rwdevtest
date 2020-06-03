@@ -20,7 +20,7 @@ def test_ssh():
 
 def rwfw_exists_chk(rip, ru, rp, rl):
     if os.name == 'nt':
-        return 'AlteonOS-32.6.2.0_dbg_21.ova'
+        return 'AlteonOS-32.6.2.0_dbg_35.ova'
     s = pxssh.pxssh()
     s.login(rip, ru, rp)
     my_cmd = 'ls ' + rl
@@ -64,5 +64,5 @@ def rwfw_do_ftp(rip, ru, rp, rl, ri):
     if os.name == 'nt':
         return 'Success'
     print("MAAANOOO");
-    rwfw_ftp_client(rip, ru, rp, rl, ri)    
+    rwfw_ftp_client(rip, ru, rp, rl, ri)
     return "Success"
