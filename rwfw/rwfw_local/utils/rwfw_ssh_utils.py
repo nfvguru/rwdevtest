@@ -29,25 +29,40 @@ def rwfw_exists_chk(rip, ru, rp, rl):
     return s.before.decode('utf-8').split('\r\n')[1]
 
 def rwfw_ftp_client(rip, ru, rp, rl, ri):
-    f_cmd='ftp ' + rip
+    print("seetha")
+    newru='reluser'
+    newrp='qwerty1!'
+    f_cmd='ftp ' + rip + ' ,timeout=100000'
+    print(f_cmd)
     child = pexpect.spawn (f_cmd)
     child.expect ('Name .*: ')
-    child.sendline (ru)
+    child.sendline (newru)
     child.expect ('Password:')
-    child.sendline (rp)
+    child.sendline (newrp)
     child.expect ('ftp> ')
+    print(child.before)
+    child.sendline ('lcd /home/devtest/Projects/rwdevtest/rwfw')
+    child.expect ('ftp> ')
+    print(child.before)
     child.sendline ('bin')
     child.expect ('ftp> ')
     cd_cmd = 'cd '+ rl
+    print(cd_cmd)
     child.sendline (cd_cmd)
     child.expect('ftp> ')
     gt_cmd = 'get ' + ri
+    print(gt_cmd)
     child.sendline (gt_cmd)
     child.expect('ftp> ')
+    print(child.before)
     child.sendline ('bye')
+    print("Satyam")
+
+
 
 def rwfw_do_ftp(rip, ru, rp, rl, ri):
     if os.name == 'nt':
         return 'Success'
+    print("MAAANOOO");
     rwfw_ftp_client(rip, ru, rp, rl, ri)    
     return "Success"
