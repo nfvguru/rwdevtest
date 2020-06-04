@@ -2,6 +2,7 @@ import time
 import os
 from django.conf import settings
 from rwfw_utils.models import rwfw_utils_imgdownload
+from rwfw_images.models import rwfw_image_downloaded
 # from rwfw_utils.models import jsons_path
 from .rwfw_json_utils import rwfw_create_config
 from .rwfw_json_utils import rwfw_get_img_from_config
@@ -97,4 +98,15 @@ def rwfw_dwnver(rip, ru, rp, rl):
     img_name  = rwfw_get_img_from_config(my_config)
     if (img_name == 'tofill' ):
         return "error"
-    return rwfw_download_build(my_config)
+    ret_str = rwfw_download_build(my_config)
+    db_obj = rwfw_image_downloaded.objects.filter(dwm_build=-100).first()
+    if db_obj:
+        vers = img_name.split('_')[0].split('-')[1]
+        bld  = img_name.split('_')[2].split('.')[0]
+        db_obj.dwn_version = vers
+        db_obj.dwm_build = bld
+        db_obj.dwn_index = db_obj.dwn_index + 1
+        db_obj.dwn_path  = img_name
+        db_obj.dwm_avail = 1
+        db_obj.save()    
+    return ret_str

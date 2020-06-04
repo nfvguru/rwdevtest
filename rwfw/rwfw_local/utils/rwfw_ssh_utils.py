@@ -20,7 +20,7 @@ def test_ssh():
 
 def rwfw_exists_chk(rip, ru, rp, rl):
     if os.name == 'nt':
-        return 'AlteonOS-32.6.2.0_dbg_35.ova'
+        return 'AlteonOS-32.6.2.0_dbg_39.ova'
     s = pxssh.pxssh()
     s.login(rip, ru, rp)
     my_cmd = 'ls ' + rl

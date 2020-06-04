@@ -77,6 +77,17 @@ class DoDownloadTaskView(View):
             dpass = db1_obj.repo_pass
             dpath = build_path_from_db(db1_obj, task_id)
             print (dpath)
+            db2_obj = rwfw_image_downloaded.objects.filter(dwn_type=task_id, dwn_version=task_version, dwm_build=task_build).first()
+            if db2_obj:
+                response_data = {
+                    't_id': -1,
+                    't_status': 'exists',
+                }
+                return JsonResponse(response_data)
+            else:
+                new_db1 = rwfw_image_downloaded(dwn_type=task_id, dwn_version=task_version, dwm_build=-100)
+                new_db1.save()
+                new_db1.id
             task = rwfw_dodownload_image.delay(dip, duser, dpass, dpath)
             response_data = {
                 't_id': task.id,
