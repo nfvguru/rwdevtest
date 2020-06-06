@@ -104,7 +104,16 @@
             <div class="card-body">
               <!-- <a href="{{BASE_UR}}/ListHost/{{item.type_name}}"> -->
 		            <p class="card-text">
-                  <strong>{{item.dwn_version}} :  {{item.dwn_build}}</strong>
+                  <strong>{{item.dwn_version}} :  {{item.dwm_build}} </strong>
+                  &emsp;&emsp;&emsp;&emsp;
+                  &emsp;&emsp;&emsp;&emsp;
+                  <img src="
+                  {% if  item.dwm_avail %}
+                  {% static 'ON.PNG' %}
+                  {% else %}
+                  {% static 'OFF.PNG' %}
+                  {% endif %}
+                  " height=30 width=30>
                   <!-- :&emsp;&emsp;
                   <img src="
                   {% if  reachable %}
@@ -165,7 +174,12 @@ function updateProgress (progressUrl, textItem, mode) {
                  window.location.reload();
               }
             } else {
-              setTimeout(updateProgress, 500, progressUrl, textItem, mode);
+              if ( mode == 1 ) {
+                my_delay = 500;
+              } else {
+                my_delay = 6000
+              }
+              setTimeout(updateProgress, my_delay, progressUrl, textItem, mode);
             }
 
         });
@@ -187,7 +201,7 @@ function chkDownload(startUrl, txtname){
 
 function doDownload(myid, myver, myfld) {
   var fldElement = document.getElementById(myfld);
-  alert(build)
+  //alert(build)
   if ( build != -1 ) {
     var bldval = 0;
   } else {
@@ -195,13 +209,13 @@ function doDownload(myid, myver, myfld) {
   }
   var downUrl ='{{BASE_UR}}/DoDownload';
   downUrl += '/' + myid + '/' + myver + '/' + bldval;
-  alert(downUrl);
+  // alert(downUrl);
   progressTitle.innerHTML = 'Downloading ..';
   fetch(downUrl).then(function(response) {
       response.json().then(function(data) {
-          alert(data.t_id);
+          //alert(data.t_id);
           progressUrl = updateUrl + data.t_id;
-          alert(progressUrl);
+          // alert(progressUrl);
           updateProgress(progressUrl, fldElement, 2);
       });
   });

@@ -18,8 +18,21 @@ def sampleWindows():
 #     sampleWindows()
 # else :
 #     sampleLinux()
+def rwfw_fabric_chk_exists(rip, ru, rp, rl):
+    conn_ptr = fabric.Connection(host=rip, port=22, user=ru, connect_kwargs={'password':rp})
+    my_cmd = 'ls ' + rl
+    res_out = 'Error'
+    try:
+        res_out = conn_ptr.run(my_cmd)
+        conn_ptr.close()
+    except:
+        res_out = 'command fail'
+    print (res_out)
+    type(res_out)
+    return res_out
 
 def rwfw_fabric_download(rip, ru, rp, rl, ri):
+    # return rwfw_fabric_chk_exists(rip, ru, rp, rl)
     conn_ptr = fabric.Connection(host=rip, port=22, user=ru, connect_kwargs={'password':rp})
     p_sep = '/'
     if os.name == 'nt' :
@@ -29,5 +42,10 @@ def rwfw_fabric_download(rip, ru, rp, rl, ri):
     print(dwn_img)
     remote_img  =  rl + '/' + ri
     print(remote_img)
-    conn_ptr.get(remote_img, dwn_img)
+    try:
+        ret_str = conn_ptr.get(remote_img, dwn_img)
+        print(ret_str)
+        conn_ptr.close()
+    except:
+        return "Fail"
     return "Success"

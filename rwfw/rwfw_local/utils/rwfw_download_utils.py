@@ -101,6 +101,10 @@ def rwfw_dwnver(rip, ru, rp, rl):
     ret_str = rwfw_download_build(my_config)
     db_obj = rwfw_image_downloaded.objects.filter(dwm_build=-100).first()
     if db_obj:
+        if ret_str == '-1':
+            print("Failed . Deleting DB")
+            db_obj.delete()
+            return ret_str
         vers = img_name.split('_')[0].split('-')[1]
         bld  = img_name.split('_')[2].split('.')[0]
         db_obj.dwn_version = vers
@@ -108,5 +112,5 @@ def rwfw_dwnver(rip, ru, rp, rl):
         db_obj.dwn_index = db_obj.dwn_index + 1
         db_obj.dwn_path  = img_name
         db_obj.dwm_avail = 1
-        db_obj.save()    
+        db_obj.save()
     return ret_str
