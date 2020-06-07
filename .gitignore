@@ -11,6 +11,13 @@ rwfw/rwfw_local/__pycache__
 rwfw/rwfw_utils/__pycache__
 rwfw/rwfw_images/__pycache__
 rwfw/rwfw_hosts/__pycache__
+rwfw/rwfw_cases/__pycache__
+rwfw/rwfw_dploymnts/__pycache__
+rwfw/rwfw_flavors/__pycache__
+rwfw/rwfw_networks/__pycache__
+rwfw/rwfw_results/__pycache__
+rwfw/rwfw_steps/__pycache__
+rwfw/rwfw_tests/__pycache__
 rwfw/rwfw_main/static
 rwfw/rwfw_main/migrations/__pycache__
 rwfw/Scripts

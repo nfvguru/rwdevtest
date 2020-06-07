@@ -23,6 +23,13 @@ urlpatterns = [
     path('', include('rwfw_main.urls')),
     path('', include('rwfw_hosts.urls')),
     path('', include('rwfw_images.urls')),
+    path('', include('rwfw_dploymnts.urls')),
+    path('', include('rwfw_flavors.urls')),
+    path('', include('rwfw_networks.urls')),
+    path('', include('rwfw_results.urls')),
+    path('', include('rwfw_steps.urls')),
+    path('', include('rwfw_tests.urls')),
+    path('', include('rwfw_cases.urls')),
     path('supermanager/', admin.site.urls),
 ]
 
